@@ -1,14 +1,14 @@
 <template>
 	<div class="form-component">
 	  <label for="first-name" class="form-label">First name</label>
-	  <input id="first-name" class="input-field" v-model="localUser.firstName" :disabled="!editMode" />
+	  <input id="first-name" class="input-field" v-model="user.firstName" :disabled="!editMode" />
 	  <label for="last-name" class="form-label">Last name</label>
-	  <input id="last-name" class="input-field" v-model="localUser.lastName" :disabled="!editMode" />
+	  <input id="last-name" class="input-field" v-model="user.lastName" :disabled="!editMode" />
 	  <label for="student-code" class="form-label">Student code</label>
-	  <input id="student-code" class="input-field" v-model="localUser.studentCode" :disabled="!editMode" />
+	  <input id="student-code" class="input-field" v-model="user.studentCode" :disabled="!editMode" />
 	</div>
 	<div class="logged-in-at">
-	  <label for="logged-in-at" class="logged-in-label">Logged in at</label>
+	  <label id="logged-in-at" class="logged-in-label">Logged in at</label>
 	  <div v-for="timestamp in reversedLoggedInAt" :key="timestamp" class="timestamp">
 		{{ timestamp }}
 	  </div>
@@ -16,7 +16,7 @@
   </template>
   
   <script>
-  import { user, logIn } from "@/global-store.js";
+  import { user } from "@/global-store.js";
   
   export default {
 	props: {
@@ -24,19 +24,18 @@
 	},
 	data() {
 	  return {
-		localUser: { ...user }, // Create a copy of the global user object
+		user,
 	  };
 	},
 	computed: {
 	  reversedLoggedInAt() {
-		return this.localUser.loggedInAt.slice().reverse();
+		return user.loggedInAt.slice().reverse();
 	  },
 	},
 	watch: {
 	  editMode(newEditMode) {
 		if (!newEditMode) {
-		  // Call logIn with local user data
-		  logIn(this.localUser.firstName, this.localUser.lastName, this.localUser.studentCode);
+		  this.$emit("editModeChanged", false);
 		}
 	  },
 	},

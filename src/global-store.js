@@ -1,17 +1,18 @@
 import songsData from './songsData.js';
+import {reactive} from 'vue';
 const all_songs = songsData;
-const user = {
+const user = reactive({
     firstName: "name",
     lastName: "surname",
     studentCode: "CODE1234",
     loggedInAt: [],
     loggedInStatus: false
-};
-function logIn(name, surname, code){
+});
+function logIn(){
     user.loggedInStatus = true;
-    user.firstName = name;
-    user.lastName = surname;
-    user.studentCode = code;
+    user.firstName = "Gustavs";
+    user.lastName = "Cers";
+    user.studentCode = "IT21024";
     const now = new Date();
     const day = now.getDate().toString().padStart(2, '0');
     const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based

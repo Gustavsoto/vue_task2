@@ -2,7 +2,7 @@
 import { user } from '@/global-store.js';
 </script>
 <template>
-  <HeaderComponent @user-logged-in="userLoggedIn" @user-logged-out="userLoggedOut" @cancel-edit="updateUser"/>
+  <HeaderComponent @user-logged-in="userLoggedIn" @user-logged-out="userLoggedOut"/>
   <NavigationComponent v-if="loggedIn" @show-home="showHome" @show-about-me="showAboutMe" />
   <router-view></router-view>
 </template>

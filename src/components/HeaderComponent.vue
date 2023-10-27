@@ -52,7 +52,7 @@ import {user, logIn, resetValues} from '@/global-store.js';
                     //for log out
                     const confirmLogin = confirm('Do you want to log in?');
                     if (confirmLogin) {
-                      logIn("Gustavs", "Cers", "IT21024");
+                      logIn();
                       this.marginRight = "75%";
                       this.headerColor = "#8645E8";
                       this.$emit('user-logged-in');

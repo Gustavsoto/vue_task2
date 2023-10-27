@@ -7,7 +7,7 @@
         {{ editMode ? 'CANCEL' : 'EDIT FORM' }}
       </button>
     </div>
-    <FormComponent :editMode="editMode" @edit-mode-changed="updateEditMode"/>
+    <FormComponent :editMode="editMode"/>
   </div>
 </template>
 
