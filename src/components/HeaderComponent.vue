@@ -1,65 +1,60 @@
-<script setup>
-import {user, logIn, resetValues} from '@/global-store.js';
-</script>
 <template>
     <div class = "header" :style="{ 'background-color': headerColor }">
         <img src="@/assets/logo (white).svg" class="logo" />
         <h1 class="siteName" :style="{ 'margin-right' : marginRight}">HelloPG</h1>
-        <img v-if="user.loggedInStatus" src="@/assets/avatar.png" class="avatar" />
-        <h1 v-if="user.loggedInStatus" class="fullName">{{ full_name }}</h1>
-        <button @click="handleLogin" class="login_button" :style='buttonStyle'>
-            {{ user.loggedInStatus ? 'LOGOUT' : 'LOGIN' }}
+        <img v-if="loggedIn" src="@/assets/avatar.png" class="avatar" />
+        <h1 v-if="loggedIn" class="fullName">{{ full_name }}</h1>
+        <button @click="handleLogin" class="login_button">
+            {{ loginStatus ? 'LOGOUT' : 'LOGIN' }}
         </button>
     </div>
 </template>
+  
 <script>
     export default {
         data() {
           return {
-            headerColor: "rgba(8, 2, 16, 0.50)",
+            user: {
+                name: "Gustavs",
+                surname: "Cers",
+                code: "IT21024"
+            },
+            loginStatus: false,
+            loggedIn: false,
+            headerColor: "grey",
             marginRight: "86%"
             };
         },
         computed: {
-          full_name() {
-            return user.firstName + ' ' + user.lastName;
-          },
-          buttonStyle() {
-            return {
-              'background-color': this.buttonBackgroundColor,
-              'color': this.buttonTextColor,
-            };
-          },
-          buttonBackgroundColor() {
-            return this.headerColor === 'rgba(8, 2, 16, 0.50)' ? '#8645E8' : '#391372';
-          },
-          buttonTextColor() {
-            return this.headerColor === 'rgba(8, 2, 16, 0.50)' ? '#1C073A' : '#D7B8FF';
-          },
+            full_name() {
+            return this.user.name + ' ' + this.user.surname;
+            }
         },
         methods: {
             handleLogin() {
-                if (user.loggedInStatus) {
+                if (this.loginStatus) {
                     //for login
                     const confirmLogout = confirm('Do you want to log out?');
                     if (confirmLogout) {
-                      resetValues();
-                      this.headerColor = "rgba(8, 2, 16, 0.50)";
-                      this.marginRight = "86%";
-                      this.$emit('user-logged-out');
+                    this.loginStatus = false;
+                    this.loggedIn = false;
+                    this.headerColor = "grey";
+                    this.marginRight = "86%";
+                    this.$emit('user-logged-out');
                     }
                 } else {
                     //for log out
                     const confirmLogin = confirm('Do you want to log in?');
                     if (confirmLogin) {
-                      logIn("Gustavs", "Cers", "IT21024");
-                      this.marginRight = "75%";
-                      this.headerColor = "#8645E8";
-                      this.$emit('user-logged-in');
+                    this.loginStatus = true;
+                    this.loggedIn = true;
+                    this.marginRight = "75%";
+                    this.headerColor = "purple";
+                    this.$emit('user-logged-in');
                     }
                 }
             }
-        }        
+        }
     };
 </script>
   
@@ -70,7 +65,7 @@ import {user, logIn, resetValues} from '@/global-store.js';
   position: fixed;
   width: 100%;
   height: 80px;
-  background-color: #8645E8;
+  background-color: purple;
   display: flex;
   align-items: center;
 }
@@ -90,10 +85,10 @@ import {user, logIn, resetValues} from '@/global-store.js';
 }
 
 .login_button {
-  background-color: #8645E8;
-  color: #D7B8FF;
+  background-color: rgb(90, 0, 90);
+  color: white;
   border: none;
-  border-radius: 50px;
+  border-radius: 8px;
   padding: 10px 20px;
   cursor: pointer;
   margin-right: 10px;
