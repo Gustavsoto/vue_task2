@@ -28,4 +28,3 @@ npm run dev
 npm run build
 ```
 # vue_task1
-# vue_task2
