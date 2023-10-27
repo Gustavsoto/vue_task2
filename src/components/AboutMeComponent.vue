@@ -1,34 +1,70 @@
 <template>
-    <div class="box">
+  <div class="box">
+    <div class="title">
       <h1>ABOUT ME</h1>
-      <h3>Name: {{ user.name }}</h3>
-      <h3>Surname: {{ user.surname }}</h3>
-      <h3>Code: {{ user.code }}</h3>
+      <div class="separator"></div>
+      <button class="button" @click="toggleEditMode" :class="{ active: editMode }">
+        {{ editMode ? 'CANCEL' : 'EDIT FORM' }}
+      </button>
     </div>
-  </template>
-  <script>
-  export default {
-    data() {
-      return {
-        user: {
-          name: "Gustavs",
-          surname: "Cers",
-          code: "IT21024",
-        },
-      };
+    <FormComponent :editMode="editMode" @edit-mode-changed="updateEditMode"/>
+  </div>
+</template>
+
+<script>
+import FormComponent from '@/components/FormComponent.vue';
+export default {
+  components: {
+    FormComponent,
+  },
+  data() {
+    return {
+      editMode: false,
+    };
+  },
+  methods: {
+    toggleEditMode() {
+      this.editMode = !this.editMode;
+
     },
-  };
-  </script>
-  <style scoped>
+    updateEditMode(newEditMode) {
+      this.editMode = newEditMode;
+    },
+  },
+};
+</script>
+
+<style scoped>
+  .title {
+    display: flex;
+    align-items: center;
+  }
+  .separator {
+    width: 1px;
+    height: 39px;
+    background-color: #464157;
+    margin: 0 20px;
+  }
   .box {
-    top: 80px;
-    left: 400px;
+    top: 100px;
+    left: 370px;
     position: fixed;
-    padding-top: 20px;
-    padding-left: 30px;
-    width: 100%;
+    width: 80%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    padding-top: 20px;
+    padding-left: 30px;
   }
-  </style>
+  .button {
+    width: 97px;
+    height: 33px;
+    border-radius: 50px;
+    color: #FFFFFF;
+    background-color: #8645E8;
+  }
+  .button.active {
+    color: #D7B8FF;
+    background-color: #391372;
+  }
+</style>
